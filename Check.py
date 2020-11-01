@@ -14,6 +14,7 @@ kernel = np.ones((2, 2), np.uint8)
 kernel1 = np.ones((1, 2), np.uint8)
 
 # Shary's changes
+# checking the working of the github
 
 # (major_ver, minor_ver, subminor_ver) = (cv2._version_).split('.')
 # if int(major_ver) < 3:
