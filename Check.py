@@ -178,6 +178,7 @@ while cap.isOpened():
                 frame = cv2.putText(frame, 'Left', org, font, fontScale, color, thickness, cv2.LINE_AA)
                 w = lw
                 h = lh
+
                 countL += 1
                 pLx = x
                 pLy = y
@@ -205,15 +206,20 @@ while cap.isOpened():
                 pRh = h
 
                 # if abs(oldrx-x) > 25:
-                #     x = oldrx
+                # x = oldrx
                 # oldrx = x
 
             # cv2.rectangle(frame, (pLx, pLy), (pLx + pLw, pLy + pLh), (255, 255, 255), 2)
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 255), 2)
 
+
             upper_left = (x, y)
             bottom_right = (x + w, y + h)
             roi = frame[upper_left[1]: bottom_right[1], upper_left[0]: bottom_right[0]]
+
+            cw = w / 2
+            ch = h / 2
+            cv2.circle(roi, (int(cw), int(ch)), 3, (0, 0, 0), -1)
 
             blurred_frame = cv2.GaussianBlur(roi, (5, 5), 0)
             # hsv1 = cv2.cvtColor(blurred_frame, cv2.COLOR_BGR2RGB)
@@ -248,12 +254,23 @@ while cap.isOpened():
             fblcontours, _ = cv2.findContours(mask_blue, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
             fgcontours, _ = cv2.findContours(mask_green, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 
-            # for fc in frcontours:
+            for fc in frcontours:
+                if cv2.contourArea(fc) > 400:
+                    # time.sleep(.8)
+                    # cv2.drawContours(roi, fc, -1, (0, 0, 0), 2)
+                    (fx,fy,fw,fh) = cv2.boundingRect(fc)
+                    # cv2.rectangle(roi, (fx, fy), (fx + fw, fy + fh), (255, 255, 255), 2)
+
+                    upper_left = (fx, fy)
+                    bottom_right = (fx + fw, fy + fh)
+                    roi1 = roi[upper_left[1]: bottom_right[1], upper_left[0]: bottom_right[0]]
+
+                    fw = fw/2
+                    fh = fh/2
+                    cv2.circle(roi1, (int(fw), int(fh)), 3, (255, 255, 255), -1)
+            # for fc in focontours:
             #     if cv2.contourArea(fc) > 250:
             #         cv2.drawContours(roi, fc, -1, (0, 0, 0), 2)
-            for fc in focontours:
-                if cv2.contourArea(fc) > 250:
-                    cv2.drawContours(roi, fc, -1, (0, 0, 0), 2)
             # for fc in fbcontours:
             #     if cv2.contourArea(fc) > 250:
             #         cv2.drawContours(roi, fc, -1, (0, 0, 0), 2)
