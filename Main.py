@@ -208,45 +208,45 @@ while cap.isOpened():
 
             # cv2.rectangle(frame, (pLx, pLy), (pLx + pLw, pLy + pLh), (255, 255, 255), 2)
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 255), 2)
-            # oldx = x
-            # print(oldx)
-            upper_left = (x, y)
-            bottom_right = (x + w, y + h)
-            roi = frame[upper_left[1]: bottom_right[1], upper_left[0]: bottom_right[0]]
+            #
+            # upper_left = (x, y)
+            # bottom_right = (x + w, y + h)
+            # roi = frame[upper_left[1]: bottom_right[1], upper_left[0]: bottom_right[0]]
+            #
+            # blurred_frame = cv2.GaussianBlur(roi, (5, 5), 0)
+            # # hsv1 = cv2.cvtColor(blurred_frame, cv2.COLOR_BGR2RGB)
+            # hsv = cv2.cvtColor(blurred_frame, cv2.COLOR_RGB2HSV)
+            #
+            # lower_red = np.array([110, 50, 50])
+            # upper_red = np.array([130, 255, 255])
+            # mask2 = cv2.inRange(hsv, lower_red, upper_red)
+            #
+            # mask3 = np.zeros(frame.shape, dtype=np.uint8)
+            # cv2.fillPoly(mask3, pts=[c], color=(255, 255, 255))
+            # masked_image = cv2.bitwise_and(frame, mask3)
+            #
+            # contours, _ = cv2.findContours(mask2, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+            #
+            # # for contour in contours:
+            # #  cv2.drawContours(frame1, contour, -1, (0, 0, 0), 1)
+            #
+            # for b in contours:
+            #     if cv2.contourArea(b) < 250:
+            #         continue
+            #     # get the bounding rect
+            #     elif cv2.contourArea(b) > 350:
+            #         x, y, w, h = cv2.boundingRect(b)
+            #         # print(x,y,w,h)
+            #         # draw a green rectangle to visualize the bounding rect2
+            #         cv2.rectangle(roi, (x, y), (x + w, y + h), (0, 255, 0), 1)
+            #         mask3 = np.zeros(frame.shape, dtype=np.uint8)
+            #         cv2.fillPoly(mask3, pts=[c], color=(255, 255, 255))
+            #
+            #         print(cv2.contourArea(b))
+            #
+            #         # apply the mask
+            #         masked_image = cv2.bitwise_and(roi, mask3)
 
-            blurred_frame = cv2.GaussianBlur(roi, (5, 5), 0)
-            # hsv1 = cv2.cvtColor(blurred_frame, cv2.COLOR_BGR2RGB)
-            hsv = cv2.cvtColor(blurred_frame, cv2.COLOR_RGB2HSV)
-
-            lower_red = np.array([110, 50, 50])
-            upper_red = np.array([130, 255, 255])
-            mask2 = cv2.inRange(hsv, lower_red, upper_red)
-
-            mask3 = np.zeros(frame.shape, dtype=np.uint8)
-            cv2.fillPoly(mask3, pts=[c], color=(255, 255, 255))
-            masked_image = cv2.bitwise_and(frame, mask3)
-
-            contours, _ = cv2.findContours(mask2, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-
-            # for contour in contours:
-            #  cv2.drawContours(frame1, contour, -1, (0, 0, 0), 1)
-
-            for b in contours:
-                if cv2.contourArea(b) < 250:
-                    continue
-                # get the bounding rect
-                elif cv2.contourArea(b) > 350:
-                    x, y, w, h = cv2.boundingRect(b)
-                    # print(x,y,w,h)
-                    # draw a green rectangle to visualize the bounding rect2
-                    cv2.rectangle(frame1, (x, y), (x + w, y + h), (0, 255, 0), 1)
-                    mask3 = np.zeros(frame.shape, dtype=np.uint8)
-                    cv2.fillPoly(mask3, pts=[c], color=(255, 255, 255))
-
-                    # print(cv2.contourArea(b))
-
-                    # apply the mask
-                    masked_image = cv2.bitwise_and(frame1, mask3)
 
     # cv2.imshow('result', masked_image)
     if contFound == False:
@@ -254,7 +254,7 @@ while cap.isOpened():
         cv2.rectangle(frame, (pRx, pRy), (pRx + pRw, pRy + pRh), (255, 255, 255), 2)
 
 
-    cv2.imshow('result', masked_image)
+    cv2.imshow('result', frame)
     # cv2.imshow('result', frame1)
     # cv2.imshow('result', roi2)
     k = cv2.waitKey(15) & 0xFF
