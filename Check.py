@@ -13,6 +13,7 @@ mask = cv2.createBackgroundSubtractorMOG2(history=1, varThreshold=15, detectShad
 kernel = np.ones((2, 2), np.uint8)
 kernel1 = np.ones((1, 2), np.uint8)
 
+#Talha changes 
 # Shary's changes
 
 # (major_ver, minor_ver, subminor_ver) = (cv2._version_).split('.')
