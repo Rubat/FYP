@@ -117,12 +117,12 @@ pLw=0
 pRw=0
 pLh=0
 pRh=0
-p1 = 0.3
-p2 = 0.7
+p1 = 0.5
+p2 = 0.5
 
 
 while cap.isOpened():
-    # time.sleep(.125)
+    time.sleep(.3)
     ret, frame = cap.read()
     if not ret:
         break
@@ -220,7 +220,7 @@ while cap.isOpened():
 
             cw = w / 2
             ch = h / 2
-            cv2.circle(roi, (int(cw), int(ch)), 3, (0, 0, 0), -1)
+            # cv2.circle(roi, (int(cw), int(ch)), 3, (0, 0, 0), -1)
 
             blurred_frame = cv2.GaussianBlur(roi, (5, 5), 0)
             # hsv1 = cv2.cvtColor(blurred_frame, cv2.COLOR_BGR2RGB)
