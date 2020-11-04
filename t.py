@@ -5,7 +5,7 @@ import statistics
 import time
 
 # Reading Video
-cap = cv2.VideoCapture('1.mp4')
+cap = cv2.VideoCapture('2.mp4')
 
 # Background Subtraction
 mask = cv2.createBackgroundSubtractorMOG2(history=1, varThreshold=15, detectShadows=False)
@@ -13,7 +13,7 @@ mask = cv2.createBackgroundSubtractorMOG2(history=1, varThreshold=15, detectShad
 kernel = np.ones((2, 2), np.uint8)
 kernel1 = np.ones((1, 2), np.uint8)
 
-#Talha changes 
+#Talha changes
 # Shary's changes
 
 # (major_ver, minor_ver, subminor_ver) = (cv2._version_).split('.')
@@ -33,43 +33,43 @@ oldlx = 0
 oldrx = 0
 
 
-while cap.isOpened():
-
-    ret, frame = cap.read()
-    if not ret:
-        break
-    frame1 = frame
-
-    a, b, c = frame.shape
-
-    mask1 = mask.apply(frame)
-    # Erosion
-    mask1 = cv2.erode(mask1, kernel, iterations=1)
-    # Dialtion
-    mask1 = cv2.dilate(mask1, kernel1, iterations=3)
-    # Morphing
-    # mask1 = cv2.morphologyEx(mask1, cv2.MORPH_OPEN, kernel)
-    mask1 = cv2.morphologyEx(mask1, cv2.MORPH_CLOSE, kernel)
-
-    contours, _ = cv2.findContours(mask1.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-    for c in contours:
-        if cv2.contourArea(c) < 400:
-            continue
-        elif cv2.contourArea(c) > 1000:
-            # print(len(contours))
-            (x, y, w, h) = cv2.boundingRect(c)
-
-            if x < b / 2:
-                # Using cv2.putText() method
-                # frame = cv2.putText(frame, 'Left', org, font, fontScale, color, thickness, cv2.LINE_AA)
-                leftwidth.append(w)
-                leftheight.append(h)
-            elif x > b / 2:
-                # frame = cv2.putText(frame, 'Right', org, font, fontScale, color, thickness, cv2.LINE_AA)
-                rightwidth.append(w)
-                rightheight.append(h)
-cap.release()
+# while cap.isOpened():
+#
+#     ret, frame = cap.read()
+#     if not ret:
+#         break
+#     frame1 = frame
+#
+#     a, b, c = frame.shape
+#
+#     mask1 = mask.apply(frame)
+#     # Erosion
+#     mask1 = cv2.erode(mask1, kernel, iterations=1)
+#     # Dialtion
+#     mask1 = cv2.dilate(mask1, kernel1, iterations=3)
+#     # Morphing
+#     # mask1 = cv2.morphologyEx(mask1, cv2.MORPH_OPEN, kernel)
+#     mask1 = cv2.morphologyEx(mask1, cv2.MORPH_CLOSE, kernel)
+#
+#     contours, _ = cv2.findContours(mask1.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+#
+#     for c in contours:
+#         if cv2.contourArea(c) < 400:
+#             continue
+#         elif cv2.contourArea(c) > 1000:
+#             # print(len(contours))
+#             (x, y, w, h) = cv2.boundingRect(c)
+#
+#             if x < b / 2:
+#                 # Using cv2.putText() method
+#                 # frame = cv2.putText(frame, 'Left', org, font, fontScale, color, thickness, cv2.LINE_AA)
+#                 leftwidth.append(w)
+#                 leftheight.append(h)
+#             elif x > b / 2:
+#                 # frame = cv2.putText(frame, 'Right', org, font, fontScale, color, thickness, cv2.LINE_AA)
+#                 rightwidth.append(w)
+#                 rightheight.append(h)
+# cap.release()
 
 
 if b in leftwidth :
@@ -98,10 +98,10 @@ print(int(avgw),int(avgh))
 
 
 # Reading Video
-cap = cv2.VideoCapture('1.mp4')
+cap = cv2.VideoCapture('2.mp4')
 
 # Background Subtraction
-mask = cv2.createBackgroundSubtractorMOG2(history=1, varThreshold=15, detectShadows=False)
+mask = cv2.createBackgroundSubtractorKNN(history=1, dist2Threshold=15, detectShadows=False)
 # Making matrix for Erosion, dilation and morphing
 kernel = np.ones((2, 2), np.uint8)
 kernel1 = np.ones((1, 2), np.uint8)
@@ -117,12 +117,12 @@ pLw=0
 pRw=0
 pLh=0
 pRh=0
-p1 = 0.5
-p2 = 0.5
+p1 = 0.3
+p2 = 0.7
 
 
 while cap.isOpened():
-    time.sleep(.3)
+    # time.sleep(.125)
     ret, frame = cap.read()
     if not ret:
         break
@@ -133,7 +133,7 @@ while cap.isOpened():
 
     mask1 = mask.apply(frame)
     # Erosion
-    mask1 = cv2.erode(mask1, kernel, iterations=1)
+    mask1 = cv2.erode(mask1, kernel, iterations=3)
     # Dialtion
     mask1 = cv2.dilate(mask1, kernel1, iterations=1)
     # Morphing
@@ -177,8 +177,8 @@ while cap.isOpened():
                 # x = int((pLx + x))
                 # y = int((pLy + y))
                 frame = cv2.putText(frame, 'Left', org, font, fontScale, color, thickness, cv2.LINE_AA)
-                w = lw
-                h = lh
+                # w = lw
+                # h = lh
 
                 countL += 1
                 pLx = x
@@ -198,8 +198,8 @@ while cap.isOpened():
                 # x = int((pRx + x))
                 # y = int((pRy + y))
                 frame = cv2.putText(frame, 'Right', org, font, fontScale, color, thickness, cv2.LINE_AA)
-                w = rw
-                h = rh
+                # w = rw
+                # h = rh
                 countR += 1
                 pRx = x
                 pRy = y
@@ -220,7 +220,7 @@ while cap.isOpened():
 
             cw = w / 2
             ch = h / 2
-            # cv2.circle(roi, (int(cw), int(ch)), 3, (0, 0, 0), -1)
+            cv2.circle(roi, (int(cw), int(ch)), 3, (0, 0, 0), -1)
 
             blurred_frame = cv2.GaussianBlur(roi, (5, 5), 0)
             # hsv1 = cv2.cvtColor(blurred_frame, cv2.COLOR_BGR2RGB)
@@ -288,10 +288,10 @@ while cap.isOpened():
         cv2.rectangle(frame, (pRx, pRy), (pRx + pRw, pRy + pRh), (255, 255, 255), 2)
 
 
-    cv2.imshow('result', frame)
+    cv2.imshow('result', frame1)
     # cv2.imshow('result', frame1)
     # cv2.imshow('result', roi2)
-    k = cv2.waitKey(15) & 0xFF
+    k = cv2.waitKey(5) & 0xFF
     if k == 27:
         break
     countL = 0
