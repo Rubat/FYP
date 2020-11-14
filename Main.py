@@ -119,7 +119,7 @@ p2 = 0.7
 
 
 while cap.isOpened():
-    # time.sleep(.125)
+    time.sleep(.12)
     ret, frame = cap.read()
     if not ret:
         break

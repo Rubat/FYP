@@ -5,15 +5,15 @@ import statistics
 import time
 
 # Reading Video
-cap = cv2.VideoCapture('new1.mp4')
+cap = cv2.VideoCapture('2.mp4')
 
 # Background Subtraction
 mask = cv2.createBackgroundSubtractorMOG2(history=1, varThreshold=15, detectShadows=False)
 # Making matrix for Erosion, dilation and morphing
 kernel = np.ones((2, 2), np.uint8)
-kernel1 = np.ones((2, 2), np.uint8)
+kernel1 = np.ones((1, 2), np.uint8)
 
-#Talha changes 
+#Talha changes
 # Shary's changes
 
 # (major_ver, minor_ver, subminor_ver) = (cv2._version_).split('.')
@@ -33,43 +33,43 @@ oldlx = 0
 oldrx = 0
 
 
-while cap.isOpened():
-
-    ret, frame = cap.read()
-    if not ret:
-        break
-    frame1 = frame
-
-    a, b, c = frame.shape
-
-    mask1 = mask.apply(frame)
-    # Erosion
-    mask1 = cv2.erode(mask1, kernel, iterations=1)
-    # Dialtion
-    mask1 = cv2.dilate(mask1, kernel1, iterations=3)
-    # Morphing
-    # mask1 = cv2.morphologyEx(mask1, cv2.MORPH_OPEN, kernel)
-    mask1 = cv2.morphologyEx(mask1, cv2.MORPH_CLOSE, kernel)
-
-    contours, _ = cv2.findContours(mask1.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-    for c in contours:
-        if cv2.contourArea(c) < 500:
-            continue
-        elif cv2.contourArea(c) > 1000:
-            # print(len(contours))
-            (x, y, w, h) = cv2.boundingRect(c)
-
-            if x < b / 2:
-                # Using cv2.putText() method
-                # frame = cv2.putText(frame, 'Left', org, font, fontScale, color, thickness, cv2.LINE_AA)
-                leftwidth.append(w)
-                leftheight.append(h)
-            elif x > b / 2:
-                # frame = cv2.putText(frame, 'Right', org, font, fontScale, color, thickness, cv2.LINE_AA)
-                rightwidth.append(w)
-                rightheight.append(h)
-cap.release()
+# while cap.isOpened():
+#
+#     ret, frame = cap.read()
+#     if not ret:
+#         break
+#     frame1 = frame
+#
+#     a, b, c = frame.shape
+#
+#     mask1 = mask.apply(frame)
+#     # Erosion
+#     mask1 = cv2.erode(mask1, kernel, iterations=1)
+#     # Dialtion
+#     mask1 = cv2.dilate(mask1, kernel1, iterations=3)
+#     # Morphing
+#     # mask1 = cv2.morphologyEx(mask1, cv2.MORPH_OPEN, kernel)
+#     mask1 = cv2.morphologyEx(mask1, cv2.MORPH_CLOSE, kernel)
+#
+#     contours, _ = cv2.findContours(mask1.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+#
+#     for c in contours:
+#         if cv2.contourArea(c) < 400:
+#             continue
+#         elif cv2.contourArea(c) > 1000:
+#             # print(len(contours))
+#             (x, y, w, h) = cv2.boundingRect(c)
+#
+#             if x < b / 2:
+#                 # Using cv2.putText() method
+#                 # frame = cv2.putText(frame, 'Left', org, font, fontScale, color, thickness, cv2.LINE_AA)
+#                 leftwidth.append(w)
+#                 leftheight.append(h)
+#             elif x > b / 2:
+#                 # frame = cv2.putText(frame, 'Right', org, font, fontScale, color, thickness, cv2.LINE_AA)
+#                 rightwidth.append(w)
+#                 rightheight.append(h)
+# cap.release()
 
 
 if b in leftwidth :
@@ -98,13 +98,13 @@ print(int(avgw),int(avgh))
 
 
 # Reading Video
-cap = cv2.VideoCapture('new1.mp4')
+cap = cv2.VideoCapture('2.mp4')
 
 # Background Subtraction
-mask = cv2.createBackgroundSubtractorMOG2(history=1, varThreshold=15, detectShadows=False)
+mask = cv2.createBackgroundSubtractorKNN(history=1, dist2Threshold=15, detectShadows=False)
 # Making matrix for Erosion, dilation and morphing
 kernel = np.ones((2, 2), np.uint8)
-kernel1 = np.ones((2, 2), np.uint8)
+kernel1 = np.ones((1, 2), np.uint8)
 
 it = 0
 countL = 0
@@ -117,12 +117,12 @@ pLw=0
 pRw=0
 pLh=0
 pRh=0
-p1 = 0.5
-p2 = 0.5
+p1 = 0.3
+p2 = 0.7
 
 
 while cap.isOpened():
-    time.sleep(.3)
+    # time.sleep(.125)
     ret, frame = cap.read()
     if not ret:
         break
@@ -133,7 +133,7 @@ while cap.isOpened():
 
     mask1 = mask.apply(frame)
     # Erosion
-    mask1 = cv2.erode(mask1, kernel, iterations=1)
+    mask1 = cv2.erode(mask1, kernel, iterations=3)
     # Dialtion
     mask1 = cv2.dilate(mask1, kernel1, iterations=1)
     # Morphing
@@ -145,7 +145,7 @@ while cap.isOpened():
 
     contFound = False
     for c in contours:
-        if cv2.contourArea(c) < 500:
+        if cv2.contourArea(c) < 400:
             contFound = False
             continue
         elif cv2.contourArea(c) > 3500:
@@ -177,8 +177,8 @@ while cap.isOpened():
                 # x = int((pLx + x))
                 # y = int((pLy + y))
                 frame = cv2.putText(frame, 'Left', org, font, fontScale, color, thickness, cv2.LINE_AA)
-                w = lw
-                h = lh
+                # w = lw
+                # h = lh
 
                 countL += 1
                 pLx = x
@@ -198,8 +198,8 @@ while cap.isOpened():
                 # x = int((pRx + x))
                 # y = int((pRy + y))
                 frame = cv2.putText(frame, 'Right', org, font, fontScale, color, thickness, cv2.LINE_AA)
-                w = rw
-                h = rh
+                # w = rw
+                # h = rh
                 countR += 1
                 pRx = x
                 pRy = y
@@ -220,7 +220,6 @@ while cap.isOpened():
 
             cw = w / 2
             ch = h / 2
-            
             cv2.circle(roi, (int(cw), int(ch)), 3, (0, 0, 0), -1)
 
             blurred_frame = cv2.GaussianBlur(roi, (5, 5), 0)
@@ -255,6 +254,7 @@ while cap.isOpened():
             fbcontours, _ = cv2.findContours(mask_brown, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
             fblcontours, _ = cv2.findContours(mask_blue, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
             fgcontours, _ = cv2.findContours(mask_green, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
             for fc in frcontours:
                 if cv2.contourArea(fc) > 400:
                     # time.sleep(.8)
@@ -269,77 +269,6 @@ while cap.isOpened():
                     fw = fw/2
                     fh = fh/2
                     cv2.circle(roi1, (int(fw), int(fh)), 3, (255, 255, 255), -1)
-
-
-            # Code for the dot in orange color finger
-
-            for fc in focontours:
-                if cv2.contourArea(fc) > 400:
-                    # time.sleep(.8)
-                    # cv2.drawContours(roi, fc, -1, (0, 0, 0), 2)
-                    (fx,fy,fw,fh) = cv2.boundingRect(fc)
-                    # cv2.rectangle(roi, (fx, fy), (fx + fw, fy + fh), (255, 255, 255), 2)
-
-                    upper_left = (fx, fy)
-                    bottom_right = (fx + fw, fy + fh)
-                    roi1 = roi[upper_left[1]: bottom_right[1], upper_left[0]: bottom_right[0]]
-
-                    fw = fw/2
-                    fh = fh/2
-                    cv2.circle(roi1, (int(fw), int(fh)), 3, (255, 255, 255), -1)
-
-            # Code for the dot in brown color finger
-
-            for fc in fbcontours:
-                if cv2.contourArea(fc) > 400:
-                    # time.sleep(.8)
-                    # cv2.drawContours(roi, fc, -1, (0, 0, 0), 2)
-                    (fx,fy,fw,fh) = cv2.boundingRect(fc)
-                    # cv2.rectangle(roi, (fx, fy), (fx + fw, fy + fh), (255, 255, 255), 2)
-
-                    upper_left = (fx, fy)
-                    bottom_right = (fx + fw, fy + fh)
-                    roi1 = roi[upper_left[1]: bottom_right[1], upper_left[0]: bottom_right[0]]
-
-                    fw = fw/2
-                    fh = fh/2
-                    cv2.circle(roi1, (int(fw), int(fh)), 3, (255, 255, 255), -1)
-
-            # Code for the dot in blue color finger
-
-            for fc in fblcontours:
-                if cv2.contourArea(fc) > 400:
-                    # time.sleep(.8)
-                    # cv2.drawContours(roi, fc, -1, (0, 0, 0), 2)
-                    (fx,fy,fw,fh) = cv2.boundingRect(fc)
-                    # cv2.rectangle(roi, (fx, fy), (fx + fw, fy + fh), (255, 255, 255), 2)
-
-                    upper_left = (fx, fy)
-                    bottom_right = (fx + fw, fy + fh)
-                    roi1 = roi[upper_left[1]: bottom_right[1], upper_left[0]: bottom_right[0]]
-
-                    fw = fw/2
-                    fh = fh/2
-                    cv2.circle(roi1, (int(fw), int(fh)), 3, (255, 255, 255), -1)
-
-            # Code for the dot in green color finger
-
-            for fc in fgcontours:
-                if cv2.contourArea(fc) > 400:
-                    # time.sleep(.8)
-                    # cv2.drawContours(roi, fc, -1, (0, 0, 0), 2)
-                    (fx,fy,fw,fh) = cv2.boundingRect(fc)
-                    # cv2.rectangle(roi, (fx, fy), (fx + fw, fy + fh), (255, 255, 255), 2)
-
-                    upper_left = (fx, fy)
-                    bottom_right = (fx + fw, fy + fh)
-                    roi1 = roi[upper_left[1]: bottom_right[1], upper_left[0]: bottom_right[0]]
-
-                    fw = fw/2
-                    fh = fh/2
-                    cv2.circle(roi1, (int(fw), int(fh)), 3, (255, 255, 255), -1)
-
-
             # for fc in focontours:
             #     if cv2.contourArea(fc) > 250:
             #         cv2.drawContours(roi, fc, -1, (0, 0, 0), 2)
@@ -353,19 +282,16 @@ while cap.isOpened():
             #     if cv2.contourArea(fc) > 250:
             #         cv2.drawContours(roi, fc, -1, (0, 0, 0), 2)
 
-    #cv2.imshow('result', masked_image)
+    # cv2.imshow('result', masked_image)
     if contFound == False:
         cv2.rectangle(frame, (pLx, pLy), (pLx + pLw, pLy + pLh), (255, 255, 255), 2)
         cv2.rectangle(frame, (pRx, pRy), (pRx + pRw, pRy + pRh), (255, 255, 255), 2)
 
 
-    cv2.imshow('result', frame)
-  #  cv2.imshow('mask red' , mask_red)
-  #  cv2.imshow('mask orange', mask_orange)
-  # cv2.imshow('mask2', mask)
     cv2.imshow('result', frame1)
-  #  cv2.imshow('result', roi2)
-    k = cv2.waitKey(15) & 0xFF
+    # cv2.imshow('result', frame1)
+    # cv2.imshow('result', roi2)
+    k = cv2.waitKey(5) & 0xFF
     if k == 27:
         break
     countL = 0
