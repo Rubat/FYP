@@ -5,7 +5,7 @@ import statistics
 import time
 
 # Reading Video
-cap = cv2.VideoCapture('1.mp4')
+cap = cv2.VideoCapture('new.mp4')
 
 # Background Subtraction
 mask = cv2.createBackgroundSubtractorMOG2(history=1, varThreshold=15, detectShadows=False)
