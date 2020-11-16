@@ -228,6 +228,9 @@ while cap.isOpened():
             # define range of blue color in HSV
             lower_blue = np.array([94, 90, 2])
             upper_blue = np.array([126, 255, 255])
+            # define range of red color in HSV
+            low_purple = np.array([120, 100, 100])
+            high_purple = np.array([165, 255, 255])
 
             # Threshold the HSV image to get only blue colors
             mask_red = cv2.inRange(hsv, lower_red, upper_red)
@@ -235,6 +238,7 @@ while cap.isOpened():
             mask_brown = cv2.inRange(hsv, lower_brown, upper_brown)
             mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
             mask_green = cv2.inRange(hsv, lower_green, upper_green)
+            purple_mask = cv2.inRange(hsv, low_purple, high_purple)
 
             frcontours, _ = cv2.findContours(mask_red, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
             focontours, _ = cv2.findContours(mask_orange, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
