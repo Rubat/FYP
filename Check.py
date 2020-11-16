@@ -223,8 +223,8 @@ while cap.isOpened():
             lower_brown = np.array([102, 50, 50])
             upper_brown = np.array([122, 255, 255])
             # define range of green color in HSV
-            lower_green = np.array([50, 100, 100])
-            upper_green = np.array([70, 255, 255])
+            lower_green = np.array([25,52,72])
+            upper_green = np.array([102, 255, 255])
             # define range of blue color in HSV
             lower_blue = np.array([154, 2, 21])
             upper_blue = np.array([174, 255, 255])
