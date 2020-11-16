@@ -3,7 +3,7 @@ import numpy as np
 import time
 
 #Open Camera object
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('new.mp4')
 
 #Decrease frame size
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
