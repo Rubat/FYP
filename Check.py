@@ -4,22 +4,54 @@ import sys
 import statistics
 import time
 
+pXRDot = []
+pYRDot = []
 
-def Dots(fcontours,roi):
+pXODot = []
+pYODot = []
 
+pXBDot = []
+pYBDot = []
+
+pXBLDot = []
+pYBLDot = []
+
+pXGDot = []
+pYGDot = []
+def Dots(fcontours,roi, x, y, color):
+    fx=0
+    fy=0
     for fc in fcontours:
-            if cv2.contourArea(fc) > 400:                   
-                (fx,fy,fw,fh) = cv2.boundingRect(fc)
-                upper_left = (fx, fy)
-                bottom_right = (fx + fw, fy + fh)
-                roi1 = roi[upper_left[1]: bottom_right[1], upper_left[0]: bottom_right[0]]
+        if cv2.contourArea(fc) > 400:                   
+            (fx,fy,fw,fh) = cv2.boundingRect(fc)
+            upper_left = (fx, fy)
+            bottom_right = (fx + fw, fy + fh)
+            roi1 = roi[upper_left[1]: bottom_right[1], upper_left[0]: bottom_right[0]]
 
-                fw = fw/2
-                fh = fh/2
-                cv2.circle(roi1, (int(fw), int(fh)), 3, (255, 255, 255), -1)
+            fw = fw/2
+            fh = fh/2
+            if color == 'red':
+                pXRDot.append(fx+x)
+                pYRDot.append(fy+y)
+            if color == 'orange':
+                pXODot.append(fx+x)
+                pYODot.append(fy+y)
+            if color == 'brown':
+                pXBDot.append(fx+x)
+                pYBDot.append(fy+y)
+            if color == 'blue':
+                pXBLDot.append(fx+x)
+                pYBLDot.append(fy+y)
+            if color == 'green':
+                pXGDot.append(fx+x)
+                pYGDot.append(fy+y)
+            cv2.circle(roi1, (int(fw), int(fh)), 3, (255, 255, 255), -1)
+    #return fx, fy
+
 
 # Reading Video
-cap = cv2.VideoCapture('new1.mp4')
+vidname = '1.mp4'
+cap = cv2.VideoCapture(vidname)
 
 # Background Subtraction
 mask = cv2.createBackgroundSubtractorMOG2(history=1, varThreshold=15, detectShadows=False)
@@ -102,7 +134,8 @@ print(int(avgw),int(avgh))
 
 
 # Reading Video
-cap = cv2.VideoCapture('new1.mp4')
+
+cap = cv2.VideoCapture(vidname)
 
 # Background Subtraction
 mask = cv2.createBackgroundSubtractorMOG2(history=1, varThreshold=15, detectShadows=False)
@@ -243,11 +276,21 @@ while cap.isOpened():
             fgcontours, _ = cv2.findContours(mask_green, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 
             # code for the dots for all the finger colors
-            Dots(frcontours,roi)
-            Dots(focontours,roi)
-            Dots(fbcontours,roi)
-            Dots(fblcontours,roi)
-            Dots(fgcontours,roi)
+            Dots(frcontours,roi, x ,y, 'red')
+            for i in range (0, len(pXRDot)):
+                cv2.circle(frame, (int(pXRDot[i]), int(pYRDot[i])), 3, (0, 0, 255, i), -1)
+            #Dots(focontours,roi, x,y, 'orange')
+            #for i in range (0, len(pXODot)):
+            #    cv2.circle(frame, (int(pXODot[i]), int(pYODot[i])), 3, (0, 255, 255, 0), -1)
+            #Dots(fbcontours,roi , x,y, 'brown' )
+            #for i in range (0, len(pXBDot)):
+            #    cv2.circle(frame, (int(pXBDot[i]), int(pYBDot[i])), 3, (0, 50, 255, 0), -1)
+            #Dots(fblcontours,roi, x,y, 'blue')
+            #for i in range (0, len(pXBLDot) ):
+            #    cv2.circle(frame, (int(pXBLDot[i]), int(pYBLDot[i])), 3, (255, 0, 0, 0), -1)
+            #Dots(fgcontours,roi, x,y, 'green')
+            #for i in range (0, len(pXGDot)):
+            #    cv2.circle(frame, (int(pXGDot[i]), int(pYGDot[i])), 3, (0, 255, 0, 0), -1)
 
     #cv2.imshow('result', masked_image)
     if contFound == False:
