@@ -50,7 +50,7 @@ def Dots(fcontours,roi, x, y, color):
 
 
 # Reading Video
-vidname = '1.mp4'
+vidname = 'new1.mp4'
 cap = cv2.VideoCapture(vidname)
 
 # Background Subtraction
@@ -95,7 +95,7 @@ while cap.isOpened():
         if cv2.contourArea(c) < 500:
             continue
         elif cv2.contourArea(c) > 1000:
-           
+
             (x, y, w, h) = cv2.boundingRect(c)
 
             if x < b / 2:
@@ -154,12 +154,12 @@ pLw=0
 pRw=0
 pLh=0
 pRh=0
-p1 = 0.5
-p2 = 0.5
+p1 = 0.3
+p2 = 0.7
 
 
 while cap.isOpened():
-    time.sleep(0.25)
+    # time.sleep(0.25)
     ret, frame = cap.read()
     if not ret:
         break
@@ -279,18 +279,18 @@ while cap.isOpened():
             Dots(frcontours,roi, x ,y, 'red')
             for i in range (0, len(pXRDot)):
                 cv2.circle(frame, (int(pXRDot[i]), int(pYRDot[i])), 3, (0, 0, 255, i), -1)
-            #Dots(focontours,roi, x,y, 'orange')
-            #for i in range (0, len(pXODot)):
-            #    cv2.circle(frame, (int(pXODot[i]), int(pYODot[i])), 3, (0, 255, 255, 0), -1)
-            #Dots(fbcontours,roi , x,y, 'brown' )
-            #for i in range (0, len(pXBDot)):
-            #    cv2.circle(frame, (int(pXBDot[i]), int(pYBDot[i])), 3, (0, 50, 255, 0), -1)
-            #Dots(fblcontours,roi, x,y, 'blue')
-            #for i in range (0, len(pXBLDot) ):
-            #    cv2.circle(frame, (int(pXBLDot[i]), int(pYBLDot[i])), 3, (255, 0, 0, 0), -1)
-            #Dots(fgcontours,roi, x,y, 'green')
-            #for i in range (0, len(pXGDot)):
-            #    cv2.circle(frame, (int(pXGDot[i]), int(pYGDot[i])), 3, (0, 255, 0, 0), -1)
+            Dots(focontours,roi, x,y, 'orange')
+            for i in range (0, len(pXODot)):
+               cv2.circle(frame, (int(pXODot[i]), int(pYODot[i])), 3, (0, 255, 255, 0), -1)
+            Dots(fbcontours,roi , x,y, 'brown' )
+            for i in range (0, len(pXBDot)):
+               cv2.circle(frame, (int(pXBDot[i]), int(pYBDot[i])), 3, (0, 50, 255, 0), -1)
+            Dots(fblcontours,roi, x,y, 'blue')
+            for i in range (0, len(pXBLDot) ):
+               cv2.circle(frame, (int(pXBLDot[i]), int(pYBLDot[i])), 3, (255, 0, 0, 0), -1)
+            Dots(fgcontours,roi, x,y, 'green')
+            for i in range (0, len(pXGDot)):
+               cv2.circle(frame, (int(pXGDot[i]), int(pYGDot[i])), 3, (0, 255, 0, 0), -1)
 
     #cv2.imshow('result', masked_image)
     if contFound == False:
